@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isaac Panel</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+overflow:hidden;
+}
+
+/* LOGIN */
+
+#login{
+background:black;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+#login h1{
+color:red;
+font-size:40px;
+margin-bottom:30px;
+}
+
+input{
+padding:12px;
+border-radius:10px;
+border:none;
+width:200px;
+margin-bottom:10px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+
+/* PAINEL */
+
+#painel{
+display:none;
+background:red;
+height:100vh;
+position:relative;
+}
+
+/* TITULO NEON */
+
+.titulo{
+text-align:center;
+font-size:40px;
+color:#4b0082;
+padding-top:20px;
+font-weight:bold;
+
+text-shadow:
+0 0 5px #4b0082,
+0 0 10px #4b0082,
+0 0 20px #4b0082,
+0 0 40px purple;
+
+}
+
+/* TEXTO LATERAL */
+
+.aviso{
+position:absolute;
+right:10px;
+top:10px;
+font-size:12px;
+color:white;
+max-width:150px;
+text-align:right;
+}
+
+/* DETECTAR CELULAR */
+
+#celular{
+text-align:center;
+color:white;
+font-size:14px;
+margin-top:5px;
+}
+
+/* FUNÇÕES */
+
+.container{
+display:flex;
+justify-content:space-around;
+margin-top:70px;
+}
+
+.coluna{
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+.funcao{
+background:black;
+color:white;
+font-size:18px;
+width:150px;
+transition:0.3s;
+}
+
+.funcao:hover{
+transform:scale(1.1);
+}
+
+.ativa{
+background:lime;
+color:black;
+}
+
+/* CALIBRAR */
+
+#calibrarArea{
+text-align:center;
+margin-top:40px;
+}
+
+#barra{
+width:80%;
+height:20px;
+background:#300000;
+margin:auto;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+
+#progresso{
+height:100%;
+width:0%;
+background:lime;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="login">
+
+<h1>IsaacTrick</h1>
+
+<input type="password" id="senha" placeholder="Senha">
+
+<button onclick="entrar()">Entrar</button>
+
+</div>
+
+<!-- PAINEL -->
+
+<div id="painel">
+
+<div class="titulo">IsaacXits</div>
+
+<div id="celular"></div>
+
+<div class="aviso">
+Este painel não é hacker, é apenas um HeadTrick.
+</div>
+
+<div class="container">
+
+<div class="coluna">
+
+<button class="funcao" onclick="toggle(this,'AimLock')">AimLock</button>
+
+<button class="funcao" onclick="toggle(this,'AimClick')">AimClick</button>
+
+<button class="funcao" onclick="toggle(this,'AimBest')">AimBest</button>
+
+</div>
+
+<div class="coluna">
+
+<button class="funcao" onclick="toggle(this,'AimShot')">AimShot</button>
+
+<button class="funcao" onclick="toggle(this,'AimMira')">AimMira</button>
+
+<button class="funcao" onclick="toggle(this,'AimFocus')">AimFocus</button>
+
+</div>
+
+</div>
+
+<div id="calibrarArea">
+
+<button onclick="calibrar()" class="funcao">Calibrar Mira</button>
+
+<div id="barra">
+<div id="progresso"></div>
+</div>
+
+<p id="porcento">0%</p>
+
+</div>
+
+</div>
+
+<script>
+
+function entrar(){
+
+let senha = document.getElementById("senha").value
+
+if(senha === "isaac02"){
+
+document.getElementById("login").style.display="none"
+document.getElementById("painel").style.display="block"
+
+detectarCelular()
+
+}else{
+
+alert("Senha incorreta")
+
+}
+
+}
+
+/* DETECTAR CELULAR */
+
+function detectarCelular(){
+
+let modelo = navigator.userAgent
+
+document.getElementById("celular").innerText = "Dispositivo: " + modelo
+
+}
+
+/* VOZ */
+
+function falar(texto){
+
+let msg = new SpeechSynthesisUtterance(texto)
+
+msg.lang = "pt-BR"
+
+speechSynthesis.speak(msg)
+
+}
+
+/* ATIVAR FUNÇÃO */
+
+function toggle(botao,nome){
+
+botao.classList.toggle("ativa")
+
+navigator.vibrate(300)
+
+if(botao.classList.contains("ativa")){
+
+falar(nome + " ativado")
+
+}else{
+
+falar(nome + " desativado")
+
+}
+
+}
+
+/* CALIBRAR MIRA */
+
+function calibrar(){
+
+let progresso = document.getElementById("progresso")
+let porcento = document.getElementById("porcento")
+
+let valor = 0
+
+let intervalo = setInterval(function(){
+
+valor++
+
+progresso.style.width = valor + "%"
+porcento.innerText = valor + "%"
+
+if(valor >= 100){
+
+clearInterval(intervalo)
+
+navigator.vibrate([200,100,200])
+
+falar("Mira calibrada")
+
+}
+
+},40)
+
+}
+
+</script>
+
+</body>
+</html>
